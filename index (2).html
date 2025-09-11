@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô phỏng: Tắt máy tính an toàn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .shake { animation: shake 0.5s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .success-pulse { animation: successPulse 0.6s ease-in-out; }
+        @keyframes successPulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Màn hình mở đầu -->
+        <div id="welcome-screen" class="fade-in">
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                <div class="mb-6">
+                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-4">Mô phỏng: Tắt máy tính an toàn với thẻ nhớ</h1>
+                    <p class="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                        Hãy giúp nhân vật thực hiện đúng các bước để tắt máy tính an toàn, không mất dữ liệu trong thẻ nhớ.
+                    </p>
+                </div>
+                <button onclick="startSimulation()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    🚀 Bắt đầu mô phỏng
+                </button>
+            </div>
+        </div>
+
+        <!-- Bước 1: Lưu tệp -->
+        <div id="step1" class="hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">1</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Bước 1 - Lưu tệp</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <!-- Mô phỏng màn hình máy tính -->
+                    <div class="bg-gray-800 rounded-lg p-4 mb-6">
+                        <div class="bg-gray-700 rounded-t-lg p-2 flex items-center space-x-2 mb-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <div class="flex-1 text-center text-gray-300 text-sm">Microsoft Word - Báo cáo.docx</div>
+                        </div>
+                        <div class="bg-white rounded-b-lg p-4 h-64">
+                            <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-blue-600 font-medium">Tệp</span>
+                                    <span class="text-gray-600">Chỉnh sửa</span>
+                                    <span class="text-gray-600">Xem</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 bg-orange-500 rounded flex items-center justify-center">
+                                        <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.828-2.828z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-sm text-gray-600">USB Drive (E:)</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="text-lg font-bold">BÁO CÁO CUỐI KỲ</div>
+                                <div class="text-sm text-gray-600">Môn: Tin học văn phòng</div>
+                                <div class="mt-4 space-y-1">
+                                    <div class="h-2 bg-gray-200 rounded w-full"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-4/5"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-3/4"></div>
+                                    <div class="h-2 bg-blue-300 rounded w-1/2 animate-pulse"></div>
+                                </div>
+                                <div class="mt-4 text-xs text-gray-500">Đang soạn thảo... | Chưa lưu</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 rounded-lg p-4 mb-6 border-l-4 border-yellow-400">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-yellow-800">Tình huống:</h3>
+                                <p class="text-yellow-700">Bạn đang soạn thảo một tài liệu quan trọng trên thẻ nhớ USB và cần tắt máy</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Bạn sẽ làm gì đầu tiên khi đang soạn thảo tệp trên thẻ nhớ?</h3>
+                    
+                    <div class="space-y-3">
+                        <button onclick="checkAnswer(1, 'A')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">A.</span>
+                            <span class="text-gray-700">Đóng tệp ngay</span>
+                        </button>
+                        <button onclick="checkAnswer(1, 'B')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">B.</span>
+                            <span class="text-gray-700">Lưu lại nội dung của tệp</span>
+                        </button>
+                        <button onclick="checkAnswer(1, 'C')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">C.</span>
+                            <span class="text-gray-700">Rút thẻ nhớ ra luôn</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bước 2: Đóng tệp -->
+        <div id="step2" class="hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">2</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Bước 2 - Đóng tệp</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="bg-green-50 rounded-lg p-6 mb-6 border-l-4 border-green-400">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-green-800 font-medium">Chính xác! Luôn lưu trước khi làm gì khác.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mô phỏng màn hình sau khi lưu -->
+                    <div class="bg-gray-800 rounded-lg p-4 mb-6">
+                        <div class="bg-gray-700 rounded-t-lg p-2 flex items-center space-x-2 mb-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <div class="flex-1 text-center text-gray-300 text-sm">Microsoft Word - Báo cáo.docx</div>
+                        </div>
+                        <div class="bg-white rounded-b-lg p-4 h-64 relative">
+                            <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                                <div class="flex space-x-4 text-sm">
+                                    <span class="text-blue-600 font-medium">Tệp</span>
+                                    <span class="text-gray-600">Chỉnh sửa</span>
+                                    <span class="text-gray-600">Xem</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-4 h-4 bg-green-500 rounded flex items-center justify-center">
+                                        <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-sm text-green-600 font-medium">Đã lưu - USB Drive (E:)</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="text-lg font-bold">BÁO CÁO CUỐI KỲ</div>
+                                <div class="text-sm text-gray-600">Môn: Tin học văn phòng</div>
+                                <div class="mt-4 space-y-1">
+                                    <div class="h-2 bg-gray-200 rounded w-full"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-4/5"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-3/4"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-1/2"></div>
+                                </div>
+                                <div class="mt-4 flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                                    </svg>
+                                    <span class="text-xs text-green-600 font-medium">Đã lưu thành công</span>
+                                </div>
+                            </div>
+                            <!-- Nút đóng tệp nổi bật -->
+                            <div class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded px-2 py-1 text-xs cursor-pointer animate-pulse">
+                                ✕ Đóng tệp
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Sau khi lưu xong, thao tác tiếp theo là gì?</h3>
+                    
+                    <div class="space-y-3">
+                        <button onclick="checkAnswer(2, 'A')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">A.</span>
+                            <span class="text-gray-700">Đóng tệp đang mở</span>
+                        </button>
+                        <button onclick="checkAnswer(2, 'B')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">B.</span>
+                            <span class="text-gray-700">Chọn Shut down</span>
+                        </button>
+                        <button onclick="checkAnswer(2, 'C')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">C.</span>
+                            <span class="text-gray-700">Ngắt kết nối phần cứng</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bước 3: Ngắt kết nối an toàn -->
+        <div id="step3" class="hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">3</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Bước 3 - Ngắt kết nối an toàn</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="bg-green-50 rounded-lg p-6 mb-6 border-l-4 border-green-400">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-green-800 font-medium">Tốt! Đã đóng tệp an toàn.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mô phỏng desktop với USB -->
+                    <div class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-4 mb-6 h-64 relative">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gray-800 h-12 flex items-center px-4">
+                            <div class="bg-blue-600 rounded p-2 mr-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-9 9a1 1 0 001.414 1.414L8 5.414V17a1 1 0 102 0V5.414l6.293 6.293a1 1 0 001.414-1.414l-9-9z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-700 rounded px-3 py-1">
+                                <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                </svg>
+                                <span class="text-white text-sm">USB Drive (E:)</span>
+                            </div>
+                            <!-- Notification area -->
+                            <div class="ml-auto flex items-center space-x-2">
+                                <div class="bg-yellow-500 rounded-full w-2 h-2 animate-pulse"></div>
+                                <span class="text-white text-xs">Thiết bị USB đang hoạt động</span>
+                            </div>
+                        </div>
+                        
+                        <!-- System tray simulation -->
+                        <div class="absolute bottom-14 right-4 bg-white rounded-lg shadow-lg p-3 border animate-bounce">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                </svg>
+                                <span class="text-sm font-medium">Safely Remove Hardware</span>
+                            </div>
+                            <div class="text-xs text-gray-600 mb-2">Chọn thiết bị để tháo an toàn:</div>
+                            <div class="bg-blue-50 hover:bg-blue-100 p-2 rounded cursor-pointer border-2 border-blue-300">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                    </svg>
+                                    <span class="text-xs">USB Mass Storage Device (E:)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop icons -->
+                        <div class="absolute top-4 left-4 space-y-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white text-xs mt-1">My Computer</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Tiếp theo bạn cần làm gì để tháo thẻ nhớ?</h3>
+                    
+                    <div class="space-y-3">
+                        <button onclick="checkAnswer(3, 'A')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">A.</span>
+                            <span class="text-gray-700">Chọn 'Safe To Remove Hardware'</span>
+                        </button>
+                        <button onclick="checkAnswer(3, 'B')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">B.</span>
+                            <span class="text-gray-700">Tắt máy ngay</span>
+                        </button>
+                        <button onclick="checkAnswer(3, 'C')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">C.</span>
+                            <span class="text-gray-700">Rút thẻ nhớ bằng tay</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bước 4: Tắt máy tính -->
+        <div id="step4" class="hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">4</div>
+                    <h2 class="text-2xl font-bold text-gray-800">Bước 4 - Tắt máy tính</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <div class="bg-green-50 rounded-lg p-6 mb-6 border-l-4 border-green-400">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <p class="text-green-800 font-medium">Đúng rồi! Đã ngắt kết nối an toàn.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mô phỏng desktop với Start menu -->
+                    <div class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-4 mb-6 h-64 relative">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gray-800 h-12 flex items-center px-4">
+                            <div class="bg-blue-600 rounded p-2 mr-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-9 9a1 1 0 001.414 1.414L8 5.414V17a1 1 0 102 0V5.414l6.293 6.293a1 1 0 001.414-1.414l-9-9z"></path>
+                                </svg>
+                            </div>
+                            <!-- Notification: USB removed safely -->
+                            <div class="ml-auto flex items-center space-x-2">
+                                <div class="bg-green-500 rounded-full w-2 h-2"></div>
+                                <span class="text-white text-xs">USB đã được tháo an toàn</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Start Menu simulation -->
+                        <div class="absolute bottom-14 left-4 bg-white rounded-lg shadow-xl p-4 border w-64 animate-pulse">
+                            <div class="flex items-center space-x-3 mb-4 pb-3 border-b">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-sm">Người dùng</div>
+                                    <div class="text-xs text-gray-500">Windows 10</div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded">
+                                    <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                    </svg>
+                                    <span class="text-sm">Documents</span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded">
+                                    <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path>
+                                    </svg>
+                                    <span class="text-sm">Settings</span>
+                                </div>
+                                
+                                <!-- Shutdown button highlighted -->
+                                <div class="border-t pt-2 mt-3">
+                                    <div class="flex items-center space-x-3 p-2 bg-red-50 hover:bg-red-100 rounded border-2 border-red-300 cursor-pointer">
+                                        <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 012 0v4a1 1 0 11-2 0V7zM8 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium text-red-600">Shut down</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop icons -->
+                        <div class="absolute top-4 left-4 space-y-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-white text-xs mt-1">My Computer</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Cuối cùng, bạn sẽ làm gì?</h3>
+                    
+                    <div class="space-y-3">
+                        <button onclick="checkAnswer(4, 'A')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">A.</span>
+                            <span class="text-gray-700">Nhấn nút Shut down</span>
+                        </button>
+                        <button onclick="checkAnswer(4, 'B')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">B.</span>
+                            <span class="text-gray-700">Nhấn Reset</span>
+                        </button>
+                        <button onclick="checkAnswer(4, 'C')" class="w-full text-left p-4 rounded-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300">
+                            <span class="font-semibold text-blue-600 mr-3">C.</span>
+                            <span class="text-gray-700">Giữ nút nguồn 5 giây</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Màn hình kết thúc -->
+        <div id="completion-screen" class="hidden">
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                <div class="mb-6">
+                    <div class="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl font-bold text-green-600 mb-4">🎉 Chúc mừng!</h1>
+                    <p class="text-lg text-gray-700 mb-6">Bạn đã tắt máy tính an toàn và bảo vệ dữ liệu trên thẻ nhớ.</p>
+                    
+                    <div class="bg-blue-50 rounded-lg p-6 mb-6">
+                        <h3 class="font-semibold text-blue-800 mb-3">Hãy luôn ghi nhớ 4 bước:</h3>
+                        <div class="flex flex-wrap justify-center gap-4 text-sm">
+                            <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
+                                <span class="font-semibold text-blue-600">1.</span> Lưu
+                            </div>
+                            <div class="text-gray-400">→</div>
+                            <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
+                                <span class="font-semibold text-blue-600">2.</span> Đóng
+                            </div>
+                            <div class="text-gray-400">→</div>
+                            <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
+                                <span class="font-semibold text-blue-600">3.</span> Ngắt kết nối
+                            </div>
+                            <div class="text-gray-400">→</div>
+                            <div class="bg-white rounded-lg px-4 py-2 shadow-sm">
+                                <span class="font-semibold text-blue-600">4.</span> Tắt máy
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="restartSimulation()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    🔄 Chơi lại
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal thông báo -->
+        <div id="feedback-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
+                <div id="feedback-content"></div>
+                <button id="feedback-button" class="mt-6 px-6 py-3 rounded-lg font-semibold transition-all duration-300"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const correctAnswers = ['B', 'A', 'A', 'A'];
+        
+        function startSimulation() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+            document.getElementById('step1').classList.add('fade-in');
+            currentStep = 1;
+        }
+        
+        function checkAnswer(step, answer) {
+            const modal = document.getElementById('feedback-modal');
+            const content = document.getElementById('feedback-content');
+            const button = document.getElementById('feedback-button');
+            
+            if (answer === correctAnswers[step - 1]) {
+                // Đáp án đúng - hiện mô phỏng tương tác
+                content.innerHTML = `
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-green-600 mb-2">Chính xác!</h3>
+                    <p class="text-gray-700">${getSuccessMessage(step)}</p>
+                `;
+                button.textContent = 'Thực hành ngay';
+                button.className = 'mt-6 px-6 py-3 rounded-lg font-semibold bg-green-500 hover:bg-green-600 text-white transition-all duration-300';
+                button.onclick = () => {
+                    modal.classList.add('hidden');
+                    startInteractiveSimulation(step);
+                };
+            } else {
+                // Đáp án sai
+                content.innerHTML = `
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-600 mb-2">Chưa đúng rồi!</h3>
+                    <p class="text-gray-700">${getErrorMessage(step)}</p>
+                `;
+                button.textContent = 'Thử lại';
+                button.className = 'mt-6 px-6 py-3 rounded-lg font-semibold bg-red-500 hover:bg-red-600 text-white transition-all duration-300';
+                button.onclick = () => {
+                    modal.classList.add('hidden');
+                };
+            }
+            
+            modal.classList.remove('hidden');
+        }
+        
+        function startInteractiveSimulation(step) {
+            // Tạo overlay mô phỏng tương tác
+            const overlay = document.createElement('div');
+            overlay.id = 'interactive-overlay';
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50';
+            
+            let simulationContent = '';
+            
+            switch(step) {
+                case 1:
+                    simulationContent = `
+                        <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4">
+                            <h3 class="text-xl font-bold mb-4 text-center">Thực hành: Lưu tệp</h3>
+                            <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                <div class="bg-white rounded p-4 shadow-sm">
+                                    <div class="flex justify-between items-center mb-2 pb-2 border-b">
+                                        <span class="font-medium">Báo cáo.docx</span>
+                                        <div class="flex space-x-2">
+                                            <button id="save-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-all duration-300 transform hover:scale-105">
+                                                💾 Lưu (Ctrl+S)
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-600">Nội dung đang được chỉnh sửa...</div>
+                                    <div id="save-status" class="mt-2 text-xs text-red-500">⚠️ Chưa lưu</div>
+                                </div>
+                            </div>
+                            <p class="text-center text-gray-600 mb-4">Nhấn nút "Lưu" để bảo vệ dữ liệu</p>
+                            <div id="save-progress" class="hidden">
+                                <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                    <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                                </div>
+                                <p class="text-center text-sm text-gray-600">Đang lưu...</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 2:
+                    simulationContent = `
+                        <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4">
+                            <h3 class="text-xl font-bold mb-4 text-center">Thực hành: Đóng tệp</h3>
+                            <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                <div id="document-window" class="bg-white rounded p-4 shadow-sm transition-all duration-500">
+                                    <div class="flex justify-between items-center mb-2 pb-2 border-b">
+                                        <span class="font-medium">Báo cáo.docx</span>
+                                        <div class="flex space-x-2">
+                                            <div class="flex items-center space-x-1">
+                                                <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                                                </svg>
+                                                <span class="text-xs text-green-600">Đã lưu</span>
+                                            </div>
+                                            <button id="close-btn" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm transition-all duration-300 transform hover:scale-105">
+                                                ✕ Đóng
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-600">Tệp đã được lưu an toàn</div>
+                                </div>
+                            </div>
+                            <p class="text-center text-gray-600 mb-4">Nhấn nút "Đóng" để đóng tệp</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 3:
+                    simulationContent = `
+                        <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4">
+                            <h3 class="text-xl font-bold mb-4 text-center">Thực hành: Ngắt kết nối USB</h3>
+                            <div class="bg-gray-800 rounded-lg p-4 mb-4 h-64 relative">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gray-700 h-10 flex items-center px-4">
+                                    <div class="flex items-center space-x-2">
+                                        <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                        </svg>
+                                        <span class="text-white text-sm">USB (E:)</span>
+                                    </div>
+                                </div>
+                                <div id="usb-dialog" class="absolute bottom-12 right-4 bg-white rounded-lg shadow-xl p-4 border">
+                                    <div class="flex items-center space-x-2 mb-3">
+                                        <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Safely Remove Hardware</span>
+                                    </div>
+                                    <button id="remove-usb-btn" class="w-full bg-blue-50 hover:bg-blue-100 p-3 rounded border-2 border-blue-300 transition-all duration-300 transform hover:scale-105">
+                                        <div class="flex items-center space-x-2">
+                                            <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                            </svg>
+                                            <span class="text-xs">USB Mass Storage (E:)</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-center text-gray-600 mb-4">Nhấn vào thiết bị USB để ngắt kết nối an toàn</p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 4:
+                    simulationContent = `
+                        <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4">
+                            <h3 class="text-xl font-bold mb-4 text-center">Thực hành: Tắt máy tính</h3>
+                            <div id="desktop-sim" class="bg-gradient-to-b from-blue-400 to-blue-600 rounded-lg p-4 mb-4 h-64 relative transition-all duration-1000">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gray-800 h-10 flex items-center px-4">
+                                    <div class="bg-blue-600 rounded p-1 mr-4">
+                                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-9 9a1 1 0 001.414 1.414L8 5.414V17a1 1 0 102 0V5.414l6.293 6.293a1 1 0 001.414-1.414l-9-9z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-auto text-white text-xs">USB đã tháo an toàn</div>
+                                </div>
+                                <div id="start-menu" class="absolute bottom-12 left-4 bg-white rounded-lg shadow-xl p-4 border w-48">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
+                                            <svg class="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                            </svg>
+                                            <span class="text-sm">Documents</span>
+                                        </div>
+                                        <div class="border-t pt-2">
+                                            <button id="shutdown-btn" class="w-full flex items-center space-x-2 p-2 bg-red-50 hover:bg-red-100 rounded border-2 border-red-300 transition-all duration-300 transform hover:scale-105">
+                                                <svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 012 0v4a1 1 0 11-2 0V7zM8 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                <span class="text-sm font-medium text-red-600">Shut down</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center text-gray-600 mb-4">Nhấn "Shut down" để tắt máy an toàn</p>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            overlay.innerHTML = simulationContent;
+            document.body.appendChild(overlay);
+            
+            // Thêm event listeners cho từng bước
+            setupInteractionHandlers(step, overlay);
+        }
+        
+        function setupInteractionHandlers(step, overlay) {
+            switch(step) {
+                case 1:
+                    const saveBtn = overlay.querySelector('#save-btn');
+                    const saveStatus = overlay.querySelector('#save-status');
+                    const saveProgress = overlay.querySelector('#save-progress');
+                    const progressBar = overlay.querySelector('#progress-bar');
+                    
+                    saveBtn.onclick = () => {
+                        saveBtn.disabled = true;
+                        saveBtn.classList.add('opacity-50');
+                        saveProgress.classList.remove('hidden');
+                        
+                        // Animate progress bar
+                        setTimeout(() => {
+                            progressBar.style.width = '100%';
+                        }, 100);
+                        
+                        setTimeout(() => {
+                            saveStatus.innerHTML = '✅ Đã lưu thành công';
+                            saveStatus.className = 'mt-2 text-xs text-green-500';
+                            
+                            setTimeout(() => {
+                                overlay.remove();
+                                nextStep(1);
+                            }, 1500);
+                        }, 1500);
+                    };
+                    break;
+                    
+                case 2:
+                    const closeBtn = overlay.querySelector('#close-btn');
+                    const documentWindow = overlay.querySelector('#document-window');
+                    
+                    closeBtn.onclick = () => {
+                        documentWindow.style.transform = 'scale(0.8)';
+                        documentWindow.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            documentWindow.innerHTML = '<div class="text-center text-gray-500 py-8">Tệp đã được đóng</div>';
+                            documentWindow.style.transform = 'scale(1)';
+                            documentWindow.style.opacity = '1';
+                            
+                            setTimeout(() => {
+                                overlay.remove();
+                                nextStep(2);
+                            }, 1500);
+                        }, 500);
+                    };
+                    break;
+                    
+                case 3:
+                    const removeUsbBtn = overlay.querySelector('#remove-usb-btn');
+                    const usbDialog = overlay.querySelector('#usb-dialog');
+                    
+                    removeUsbBtn.onclick = () => {
+                        removeUsbBtn.innerHTML = `
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                <span class="text-xs">Đang ngắt kết nối...</span>
+                            </div>
+                        `;
+                        
+                        setTimeout(() => {
+                            usbDialog.innerHTML = `
+                                <div class="text-center">
+                                    <svg class="w-8 h-8 text-green-500 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path>
+                                    </svg>
+                                    <p class="text-sm text-green-600 font-medium">An toàn để tháo USB</p>
+                                </div>
+                            `;
+                            
+                            setTimeout(() => {
+                                overlay.remove();
+                                nextStep(3);
+                            }, 1500);
+                        }, 2000);
+                    };
+                    break;
+                    
+                case 4:
+                    const shutdownBtn = overlay.querySelector('#shutdown-btn');
+                    const desktopSim = overlay.querySelector('#desktop-sim');
+                    
+                    shutdownBtn.onclick = () => {
+                        shutdownBtn.innerHTML = `
+                            <div class="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                            <span class="text-sm font-medium text-red-600">Đang tắt...</span>
+                        `;
+                        
+                        setTimeout(() => {
+                            desktopSim.style.background = 'black';
+                            desktopSim.innerHTML = `
+                                <div class="flex items-center justify-center h-full">
+                                    <div class="text-white text-center">
+                                        <div class="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                                        <p>Shutting down...</p>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            setTimeout(() => {
+                                desktopSim.innerHTML = `
+                                    <div class="flex items-center justify-center h-full">
+                                        <div class="text-gray-500 text-center">
+                                            <svg class="w-12 h-12 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 012 0v4a1 1 0 11-2 0V7zM8 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <p>Máy tính đã tắt an toàn</p>
+                                        </div>
+                                    </div>
+                                `;
+                                
+                                setTimeout(() => {
+                                    overlay.remove();
+                                    showCompletion();
+                                }, 2000);
+                            }, 2000);
+                        }, 1000);
+                    };
+                    break;
+            }
+        }
+        
+        function getSuccessMessage(step) {
+            const messages = [
+                'Luôn lưu trước khi làm gì khác.',
+                'Đã đóng tệp an toàn.',
+                'Đã ngắt kết nối an toàn.',
+                'Bạn đã hoàn thành tất cả các bước!'
+            ];
+            return messages[step - 1];
+        }
+        
+        function getErrorMessage(step) {
+            const messages = [
+                'Dữ liệu có thể bị mất. Hãy thử lại.',
+                'Không nên làm bước này ngay, thử lại!',
+                'Cần ngắt kết nối an toàn trước. Thử lại!',
+                'Cách này không an toàn. Thử lại!'
+            ];
+            return messages[step - 1];
+        }
+        
+        function nextStep(currentStepNum) {
+            document.getElementById(`step${currentStepNum}`).classList.add('hidden');
+            document.getElementById(`step${currentStepNum + 1}`).classList.remove('hidden');
+            document.getElementById(`step${currentStepNum + 1}`).classList.add('fade-in');
+            currentStep = currentStepNum + 1;
+        }
+        
+        function showCompletion() {
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('completion-screen').classList.remove('hidden');
+            document.getElementById('completion-screen').classList.add('fade-in');
+        }
+        
+        function restartSimulation() {
+            // Ẩn tất cả màn hình
+            document.querySelectorAll('[id$="-screen"], [id^="step"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Hiện màn hình chào mừng
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            document.getElementById('welcome-screen').classList.add('fade-in');
+            currentStep = 0;
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9708bf2d2279b5e2',t:'MTc1NTQyOTI1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
