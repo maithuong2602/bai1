@@ -153,24 +153,36 @@
         appData = {
             'listboxId1': { 
                 title: 'Tên hiển thị', 
-                items: [{ id: 123, title: 'Nội dung' }] 
+                items: [{ id: 123, title: 'Nội dung', slug: 'url-friendly-name' }] 
             },
             'listboxId2': { ... }
         }
         */
         let appData = {}; 
         
+        // Hàm chuyển đổi văn bản sang định dạng slug (URL thân thiện)
+        function convertToSlug(text) {
+            if (!text) return '';
+            // 1. Chuyển tiếng Việt có dấu thành không dấu
+            text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, ""); 
+            // 2. Loại bỏ ký tự đặc biệt, giữ lại chữ cái, số và khoảng trắng
+            text = text.toLowerCase().replace(/[^a-z0-9\s]/g, ""); 
+            // 3. Thay thế khoảng trắng bằng dấu gạch ngang
+            text = text.replace(/\s+/g, '-'); 
+            // 4. Loại bỏ dấu gạch ngang thừa ở đầu/cuối
+            return text.replace(/^-+|-+$/g, ''); 
+        }
+
         // Hàm khởi tạo/tải dữ liệu khi trang được load
         function loadData() {
             const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
             if (storedData) {
                 appData = JSON.parse(storedData);
             } else {
-                // ĐÃ CẬP NHẬT: Chỉ khởi tạo Listbox mặc định: Ghi Chú Chung
+                // Chỉ khởi tạo Listbox mặc định: Ghi Chú Chung
                 appData = {
                     ghiChuChung: { title: "Ghi Chú Chung (Ngoài Các Buổi)", items: [] }
                 };
-                // KHÔNG TẠO SẴN 20 Listbox Buổi 1-20
             }
             renderAllListboxes();
         }
@@ -281,7 +293,9 @@
             // 2. Danh sách Nội dung (UL)
             const ulElement = document.createElement('ul');
             items.forEach(item => {
-                ulElement.appendChild(createListItem(item.title, item.id, listId));
+                // Truyền slug vào hàm tạo item
+                const itemSlug = item.slug || convertToSlug(item.title);
+                ulElement.appendChild(createListItem(item.title, item.id, listId, itemSlug));
             });
             listboxDiv.appendChild(ulElement);
 
@@ -300,8 +314,9 @@
          * @param {string} title - Tiêu đề nội dung.
          * @param {number} id - ID nội dung (timestamp).
          * @param {string} listId - ID của Listbox chứa mục này.
+         * @param {string} slug - Tên file/URL chuẩn hóa.
          */
-        function createListItem(title, id, listId) {
+        function createListItem(title, id, listId, slug) {
             const listItem = document.createElement('li');
             listItem.className = 'item-row';
             listItem.dataset.id = id;
@@ -311,8 +326,9 @@
             titleSpan.className = 'item-title';
             titleSpan.textContent = title;
             titleSpan.onclick = function() {
-                // Chuyển hướng đến trang chi tiết
-                window.location.href = `detail.html?id=${id}&title=${encodeURIComponent(title)}`;
+                // CHỈNH SỬA: Sử dụng slug làm tham số page
+                // Ví dụ: detail.html?page=chiahetcho3&id=...
+                window.location.href = `detail.html?page=${encodeURIComponent(slug)}&id=${id}&title=${encodeURIComponent(title)}`;
             };
             
             // 2. Phần hành động (Sửa/Xóa nội dung)
@@ -353,16 +369,18 @@
 
             if (noiDung) {
                 const newPageId = Date.now(); 
+                const slug = convertToSlug(noiDung); // TẠO SLUG MỚI
                 
                 const newItem = {
                     id: newPageId,
-                    title: noiDung
+                    title: noiDung,
+                    slug: slug // LƯU SLUG VÀO DỮ LIỆU
                 };
                 
                 appData[listId].items.push(newItem);
                 saveData(); 
                     
-                const listItem = createListItem(noiDung, newPageId, listId); 
+                const listItem = createListItem(noiDung, newPageId, listId, slug); // Truyền slug vào
                 document.querySelector(`#${listId} ul`).appendChild(listItem);
             }
         }
@@ -378,6 +396,8 @@
 
             if (newTitle !== null && newTitle.trim() !== currentItem.title) {
                 currentItem.title = newTitle.trim();
+                // CHÚ Ý: Không tự động cập nhật slug khi sửa tên để tránh làm hỏng các link đã lưu.
+                // Nếu muốn cập nhật slug, người dùng cần xóa và tạo lại.
                 saveData(); 
                 
                 const listItemElement = document.querySelector(`#${listId} li[data-id="${itemId}"]`);
